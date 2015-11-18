@@ -33,10 +33,18 @@ private:
 	double readRawTemperature(); //raw digital reading of temperature
 	double readRawHumidity(); //raw digital reading of temperature
 	void configDefault(); //will house default settings for the cofiguration ragister
+	
 	// Private Variables
 	unsigned char slaveAddress;
+	//register settings, in order from the datasheet
+	
+	//from register 0x00 (temperature register)
 	int temperatureRegister;
+	
+	//from register 0x01 (humidity register)
 	int humidityRegister;
-	int configRegister; //the status of the config register
+	
+	//from register 0x02 (configuration register)
+	int configRegister; //the status of the config register, send contents of this variable to 0x02 adrress
 	I2C * i2c_manager;
 }
