@@ -11,6 +11,10 @@
 #include "msp.h"
 #include <stdint.h>
 
+//define the temperature and humidity registers we will be reading from
+#define TEMP 0x00
+#define HUM  0x01
+
 namespace LooperPedal {
 	
 	HDC10008 ::~ HDC10008(){
@@ -90,14 +94,19 @@ namespace LooperPedal {
 	 
 	 //Private (Helper Function) Definitions
 	 double readRawTemperature(){//access the raw temperature register
-		 
+		 return TEMP; //accesses the 0x00 temperature regitser (above)
 	 }
 	 
 	 double readRawHumidty(){//access the raw humidity register
-		 
+		 return HUM;
 	 }
 	 
-	 void configDefault(){//call this to reset to default config as specified by the datasheet
-		 
+	 void configDefault(){//call this to reset to default config as specified below
+	 //pertinant register defaults as follows
+	 //HEAT[13] = 0; MODE[12] = 0; TRES[10] = 1; HRES[9:8] = 10
+	 //these default config settings are subject to low power mode for the sensor
+	 
+		 configRegister = configRegister | 0000011000000000; 
+		 configRegister = configRegister & 1100111011111111;
 	 }
 }
